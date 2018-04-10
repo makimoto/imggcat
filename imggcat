@@ -46,12 +46,23 @@ function print_image() {
     printf "%s" "$3" | base64 $BASE64ARG | wc -c | awk '{printf "size=%d",$1}'
     printf ";inline=$2"
     printf ":"
-    printf "%s" "$3"
+    printf "%s" "$(glitch $3)"
     print_st
     printf '\n'
     if [[ -n "$4" ]]; then
       echo $1
     fi
+}
+
+function glitch() {
+    check_dependency sed
+    SRC="$(rand_str)"
+    DST="$(rand_str)"
+    echo $1 | sed -e"s/$SRC/$DST/g" 1>& 2
+}
+
+function rand_str() {
+    cat /dev/urandom | LC_CTYPE= tr -dc 'a-z' | fold -w ${1:-2} | head -n 1 2>& 1
 }
 
 function error() {
