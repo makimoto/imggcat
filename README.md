@@ -2,6 +2,8 @@
 
 Image cat with glitch.
 
+![](example.jpg)
+
 ## Usage
 See `imggcat -h`.
 
